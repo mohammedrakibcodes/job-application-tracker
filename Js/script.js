@@ -3,7 +3,7 @@
 let jobList = [
   {
     id: 1,
-    companyName: "TechNova Solutions",
+    companyName: "Tech nova Solutions",
     position: "Frontend Developer",
     location: "Remote",
     type: "Full-time",
@@ -14,7 +14,7 @@ let jobList = [
 
   {
     id: 2,
-    companyName: "CloudSync Ltd",
+    companyName: "Cloud sync Ltd",
     position: "Backend Developer",
     location: "Dhaka",
     type: "Full-time",
@@ -25,7 +25,7 @@ let jobList = [
 
   {
     id: 3,
-    companyName: "PixelCraft Studio",
+    companyName: "Pixel craft Studio",
     position: "UI Designer",
     location: "Remote",
     type: "Contract",
@@ -36,7 +36,7 @@ let jobList = [
 
   {
     id: 4,
-    companyName: "SecureNet Systems",
+    companyName: "Secure net Systems",
     position: "Cyber Security Analyst",
     location: "Chittagong",
     type: "Full-time",
@@ -47,7 +47,7 @@ let jobList = [
 
   {
     id: 5,
-    companyName: "DataMind AI",
+    companyName: "Data mind AI",
     position: "Machine Learning Engineer",
     location: "Remote",
     type: "Full-time",
@@ -58,7 +58,7 @@ let jobList = [
 
   {
     id: 6,
-    companyName: "BrightApps",
+    companyName: "Bright app studio",
     position: "Mobile App Developer",
     location: "Sylhet",
     type: "Full-time",
@@ -69,7 +69,7 @@ let jobList = [
 
   {
     id: 7,
-    companyName: "WebCore Agency",
+    companyName: "Web core Agency",
     position: "WordPress Developer",
     location: "Remote",
     type: "Freelance",
@@ -80,7 +80,7 @@ let jobList = [
 
   {
     id: 8,
-    companyName: "FinEdge Corp",
+    companyName: "Fine Corp",
     position: "Software Engineer",
     location: "Dhaka",
     type: "Full-time",
@@ -106,8 +106,66 @@ let jobCountText = document.getElementById("jobCount");
 
 let currentTab = "all";
 
-function startApp() {
-  console.log("Dom things->");
+//---
+function showJobs() {
+  jobContainer.innerHTML = "";
+
+  if (jobList.length === 0) {
+    jobContainer.innerHTML = `
+      <div class="text-center py-20">
+        <h3 class="text-xl font-semibold text-blue-900 mb-2">
+          No jobs available
+        </h3>
+        <p class="text-gray-500 text-sm">
+          Please check later
+        </p>
+      </div>
+    `;
+
+    jobCountText.innerText = "0 Jobs";
+    return;
+  }
+
+  jobContainer.className = "space-y-6";
+
+  jobList.forEach(function (job) {
+    let card = document.createElement("div");
+
+    card.className =
+      "bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-3";
+
+    card.innerHTML = `
+      <h3 class="text-base font-semibold text-gray-900">
+        ${job.companyName}
+      </h3>
+
+      <p class="text-sm text-gray-600">
+        ${job.position}
+      </p>
+
+      <p class="text-sm text-gray-500">
+        ${job.location} • ${job.type} • ${job.salary}
+      </p>
+
+      <p class="text-sm text-gray-500">
+        ${job.description}
+      </p>
+
+      <div class="flex gap-3 pt-2">
+        <button class="px-4 py-1 border border-green-500 text-green-600 rounded-md text-xs">
+          Interview
+        </button>
+
+        <button class="px-4 py-1 border border-red-500 text-red-600 rounded-md text-xs">
+          Rejected
+        </button>
+      </div>
+    `;
+
+    jobContainer.appendChild(card);
+  });
+
+  jobCountText.innerText = jobList.length + " Jobs";
 }
 
-startApp();
+showJobs();
