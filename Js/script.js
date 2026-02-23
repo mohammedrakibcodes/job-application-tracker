@@ -89,3 +89,25 @@ let jobList = [
     status: "all",
   },
 ];
+
+//============= Dom things-->
+
+let jobContainer = document.getElementById("jobsContainer");
+
+let totalCountBox = document.getElementById("totalCount");
+let interviewCountBox = document.getElementById("interviewCount");
+let rejectedCountBox = document.getElementById("rejectedCount");
+
+let allBtn = document.getElementById("allTab");
+let interviewBtn = document.getElementById("interviewTab");
+let rejectedBtn = document.getElementById("rejectedBtn");
+
+let jobCountText = document.getElementById("jobCount");
+
+let currentTab = "all";
+
+function startApp() {
+  console.log("Dom things->");
+}
+
+startApp();
