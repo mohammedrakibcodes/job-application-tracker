@@ -100,13 +100,12 @@ let rejectedCountBox = document.getElementById("rejectedCount");
 
 let allBtn = document.getElementById("allTab");
 let interviewBtn = document.getElementById("interviewTab");
-let rejectedBtn = document.getElementById("rejectedBtn");
+let rejectedBtn = document.getElementById("rejectedTab");
 
 let jobCountText = document.getElementById("jobCount");
 
 let currentTab = "all";
 
-//---
 function showJobs() {
   jobContainer.innerHTML = "";
 
@@ -152,11 +151,13 @@ function showJobs() {
       </p>
 
       <div class="flex gap-3 pt-2">
-        <button class="px-4 py-1 border border-green-500 text-green-600 rounded-md text-xs">
+        <button data-id="${job.id}" data-type="interview"
+          class="px-4 py-1 border border-green-500 text-green-600 rounded-md text-xs">
           Interview
         </button>
 
-        <button class="px-4 py-1 border border-red-500 text-red-600 rounded-md text-xs">
+        <button data-id="${job.id}" data-type="rejected"
+          class="px-4 py-1 border border-red-500 text-red-600 rounded-md text-xs">
           Rejected
         </button>
       </div>
@@ -169,3 +170,26 @@ function showJobs() {
 }
 
 showJobs();
+
+//=>
+
+jobContainer.addEventListener("click", function (event) {
+  let btn = event.target;
+
+  if (btn.tagName !== "BUTTON") {
+    return;
+  }
+
+  let id = btn.getAttribute("data-id");
+  let type = btn.getAttribute("data-type");
+
+  let job = jobList.find(function (item) {
+    return item.id == id;
+  });
+
+  if (job) {
+    job.status = type;
+  }
+
+  showJobs();
+});
