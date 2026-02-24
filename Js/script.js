@@ -192,4 +192,24 @@ jobContainer.addEventListener("click", function (event) {
   }
 
   showJobs();
+
+  updateDashboard();
 });
+
+//=> Counter
+
+function updateDashboard() {
+  totalCountBox.innerText = jobList.length;
+
+  let interviewTotal = jobList.filter(function (job) {
+    return job.status === "interview";
+  }).length;
+
+  interviewCountBox.innerText = interviewTotal;
+
+  let rejectedTotal = jobList.filter(function (job) {
+    return job.status === "rejected";
+  }).length;
+
+  rejectedCountBox.innerText = rejectedTotal;
+}
