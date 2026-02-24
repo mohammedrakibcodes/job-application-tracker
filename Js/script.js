@@ -104,9 +104,15 @@ function showJobs() {
 
   let jobsToShow = jobList;
 
-  if (currentTab !== "all") {
+  if (currentTab === "interview") {
     jobsToShow = jobList.filter(function (job) {
-      return job.status === currentTab;
+      return job.status === "interview";
+    });
+  }
+
+  if (currentTab === "rejected") {
+    jobsToShow = jobList.filter(function (job) {
+      return job.status === "rejected";
     });
   }
 
@@ -135,6 +141,19 @@ function showJobs() {
     card.className =
       "bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-3";
 
+    let badgeText = "NOT APPLIED";
+    let badgeStyle = "bg-gray-100 text-gray-600";
+
+    if (job.status === "interview") {
+      badgeText = "APPLIED";
+      badgeStyle = "bg-green-100 text-green-700";
+    }
+
+    if (job.status === "rejected") {
+      badgeText = "REJECTED";
+      badgeStyle = "bg-red-100 text-red-700";
+    }
+
     card.innerHTML = `
       <h3 class="text-base font-semibold text-gray-900">
         ${job.companyName}
@@ -148,6 +167,10 @@ function showJobs() {
         ${job.location} • ${job.type} • ${job.salary}
       </p>
 
+      <span class="inline-block px-3 py-1 text-xs rounded-md ${badgeStyle}">
+        ${badgeText}
+      </span>
+
       <p class="text-sm text-gray-500">
         ${job.description}
       </p>
@@ -159,7 +182,7 @@ function showJobs() {
         </button>
 
         <button data-id="${job.id}" data-type="rejected"
-          class="px-4 py-1 border border-red-500 text-red-600 rounded-md text-xs">
+          class="px-4 py-1 border  border-red-500 text-red-600 rounded-md text-xs">
           Rejected
         </button>
 
