@@ -9,7 +9,7 @@ let jobList = [
     type: "Full-time",
     salary: "$1200/month",
     description: "Build responsive UI using modern JavaScript frameworks.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ let jobList = [
     type: "Full-time",
     salary: "$1500/month",
     description: "Develop REST APIs and manage server architecture.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ let jobList = [
     type: "Contract",
     salary: "$900/month",
     description: "Design user interfaces for web applications.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ let jobList = [
     type: "Full-time",
     salary: "$1800/month",
     description: "Monitor and secure enterprise network systems.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 5,
@@ -49,7 +49,7 @@ let jobList = [
     type: "Full-time",
     salary: "$2000/month",
     description: "Develop AI models and improve prediction systems.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ let jobList = [
     type: "Full-time",
     salary: "$1300/month",
     description: "Build Android and iOS applications.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 7,
@@ -69,7 +69,7 @@ let jobList = [
     type: "Freelance",
     salary: "$800/month",
     description: "Develop and maintain WordPress websites.",
-    status: "all",
+    status: "not applied",
   },
   {
     id: 8,
@@ -79,22 +79,17 @@ let jobList = [
     type: "Full-time",
     salary: "$1700/month",
     description: "Maintain scalable financial software systems.",
-    status: "all",
+    status: "not applied",
   },
 ];
 
-//============= Dom things-->
-
 let jobContainer = document.getElementById("jobsContainer");
-
 let totalCountBox = document.getElementById("totalCount");
 let interviewCountBox = document.getElementById("interviewCount");
 let rejectedCountBox = document.getElementById("rejectedCount");
-
 let allBtn = document.getElementById("allTab");
 let interviewBtn = document.getElementById("interviewTab");
 let rejectedBtn = document.getElementById("rejectedTab");
-
 let jobCountText = document.getElementById("jobCount");
 
 let currentTab = "all";
@@ -105,29 +100,22 @@ function showJobs() {
   let jobsToShow = jobList;
 
   if (currentTab === "interview") {
-    jobsToShow = jobList.filter(function (job) {
-      return job.status === "interview";
-    });
+    jobsToShow = jobList.filter((job) => job.status === "interview");
   }
 
   if (currentTab === "rejected") {
-    jobsToShow = jobList.filter(function (job) {
-      return job.status === "rejected";
-    });
+    jobsToShow = jobList.filter((job) => job.status === "rejected");
   }
 
   if (jobsToShow.length === 0) {
     jobContainer.innerHTML = `
-      <div class="text-center py-20">
+      <div class="bg-white rounded-2xl shadow-sm py-24 text-center">
         <h3 class="text-xl font-semibold text-blue-900 mb-2">
           No jobs available
         </h3>
-        <p class="text-gray-500 text-sm">
-          Try another tab
-        </p>
+        <p class="text-gray-500 text-sm">Try another tab</p>
       </div>
     `;
-
     jobCountText.innerText = "0 Jobs";
     updateDashboard();
     return;
@@ -136,11 +124,6 @@ function showJobs() {
   jobContainer.className = "space-y-6";
 
   jobsToShow.forEach(function (job) {
-    let card = document.createElement("div");
-
-    card.className =
-      "bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-3";
-
     let badgeText = "NOT APPLIED";
     let badgeStyle = "bg-gray-100 text-gray-600";
 
@@ -154,78 +137,42 @@ function showJobs() {
       badgeStyle = "bg-red-100 text-red-700";
     }
 
-    card.innerHTML = `
-      <h3 class="text-base font-semibold text-gray-900">
-        ${job.companyName}
-      </h3>
+    jobContainer.innerHTML += `
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-3">
+        <h3 class="text-base font-semibold text-gray-900">${job.companyName}</h3>
+        <p class="text-sm text-gray-600">${job.position}</p>
+        <p class="text-sm text-gray-500">${job.location} • ${job.type} • ${job.salary}</p>
 
-      <p class="text-sm text-gray-600">
-        ${job.position}
-      </p>
-
-      <p class="text-sm text-gray-500">
-        ${job.location} • ${job.type} • ${job.salary}
-      </p>
-
-      <span class="inline-block px-3 py-1 text-xs rounded-md ${badgeStyle}">
-        ${badgeText}
-      </span>
-
-      <p class="text-sm text-gray-500">
-        ${job.description}
-      </p>
-
-      <div class="flex gap-3 pt-2">
-        <button data-id="${job.id}" data-type="interview"
-          class="px-4 py-1 border border-green-500 text-green-600 rounded-md text-xs">
-          Interview
-        </button>
-
-        <button data-id="${job.id}" data-type="rejected"
-          class="px-4 py-1 border  border-red-500 text-red-600 rounded-md text-xs">
-          Rejected
-        </button>
-
-        <button data-id="${job.id}" data-type="delete"
-          class="px-4 py-1 border border-gray-400 text-gray-600 rounded-md text-xs">
-          Delete
-        </button>
+        <span class="inline-block px-3 py-1 text-xs rounded-md ${badgeStyle}">${badgeText}</span>
+        <p class="text-sm text-gray-500">${job.description}</p>
+        <div class="flex gap-3 pt-2">
+          <button data-id="${job.id}" data-type="interview" class="px-4 py-1 border border-green-500 text-green-600 rounded-md text-xs">Interview</button>
+          <button data-id="${job.id}" data-type="rejected" class="px-4 py-1 border border-red-500 text-red-600 rounded-md text-xs">Rejected</button>
+          <button data-id="${job.id}" data-type="delete" class="px-4 py-1 border border-gray-400 text-gray-600 rounded-md text-xs">Delete</button>
+        </div>
       </div>
     `;
-
-    jobContainer.appendChild(card);
   });
 
   jobCountText.innerText = jobsToShow.length + " Jobs";
   updateDashboard();
 }
 
-//=>
-
 jobContainer.addEventListener("click", function (event) {
-  let btn = event.target;
+  if (event.target.tagName !== "BUTTON") return;
 
-  if (btn.tagName !== "BUTTON") return;
-
-  let id = btn.getAttribute("data-id");
-  let type = btn.getAttribute("data-type");
+  let id = event.target.getAttribute("data-id");
+  let type = event.target.getAttribute("data-type");
 
   if (type === "delete") {
     jobList = removeJobById(jobList, id);
-    showJobs();
-    return;
-  }
-
-  let job = findJobById(jobList, id);
-
-  if (job) {
-    job.status = type;
+  } else {
+    let job = findJobById(jobList, id);
+    if (job) job.status = type;
   }
 
   showJobs();
 });
-
-//=> Counter
 
 function updateDashboard() {
   totalCountBox.innerText = jobList.length;
@@ -233,20 +180,43 @@ function updateDashboard() {
   rejectedCountBox.innerText = countRejected(jobList);
 }
 
-//>Btn-works-logic
-allBtn.addEventListener("click", function () {
+function updateActiveTab() {
+  allBtn.className =
+    "px-5 py-2 rounded-xl bg-gray-200 text-gray-700 text-sm font-medium";
+  interviewBtn.className =
+    "px-5 py-2 rounded-xl bg-gray-200 text-gray-700 text-sm font-medium";
+  rejectedBtn.className =
+    "px-5 py-2 rounded-xl bg-gray-200 text-gray-700 text-sm font-medium";
+
+  if (currentTab === "all") {
+    allBtn.className =
+      "px-5 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium";
+  }
+  if (currentTab === "interview") {
+    interviewBtn.className =
+      "px-5 py-2 rounded-xl bg-green-600 text-white text-sm font-medium";
+  }
+  if (currentTab === "rejected") {
+    rejectedBtn.className =
+      "px-5 py-2 rounded-xl bg-red-600 text-white text-sm font-medium";
+  }
+}
+
+allBtn.onclick = function () {
   currentTab = "all";
+  updateActiveTab();
   showJobs();
-});
-
-interviewBtn.addEventListener("click", function () {
+};
+interviewBtn.onclick = function () {
   currentTab = "interview";
+  updateActiveTab();
   showJobs();
-});
-
-rejectedBtn.addEventListener("click", function () {
+};
+rejectedBtn.onclick = function () {
   currentTab = "rejected";
+  updateActiveTab();
   showJobs();
-});
+};
 
+updateActiveTab();
 showJobs();

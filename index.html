@@ -4,21 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <!-- Font Awesome  -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
 
-    <!-- Geist Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
       rel="stylesheet"
@@ -32,17 +24,15 @@
 
     <title>Job Application Tracker</title>
   </head>
+
   <body class="bg-[#f4f6fb] min-h-screen">
     <div class="min-h-screen flex justify-center">
       <div class="w-full max-w-6xl px-6 py-16">
-        <!-- Title Text -->
-
         <h1 class="text-3xl font-bold text-blue-900 mb-10">
           Job Application Tracker
         </h1>
 
-        <!-- Default Dashboard -->
-
+        <!-- Dashboard -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
           <div class="bg-white rounded-2xl shadow-sm p-6">
             <p class="text-gray-500 text-sm">Total</p>
@@ -69,18 +59,17 @@
           </div>
         </div>
 
-        <!-- Header Section-->
-
+        <!-- Header -->
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-blue-900">Available Jobs</h2>
-          <span id="jobCount" class="text-gray-500 text-sm"> 0 Jobs </span>
+          <span id="jobCount" class="text-gray-500 text-sm">0 Jobs</span>
         </div>
 
         <!-- Tabs -->
         <div class="flex gap-3 mb-10">
           <button
             id="allTab"
-            class="px-5 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium"
+            class="px-5 py-2 rounded-xl bg-gray-200 text-gray-700 text-sm font-medium"
           >
             All
           </button>
@@ -100,27 +89,10 @@
           </button>
         </div>
 
-        <!--Empty -->
-        <div
-          id="jobsContainer"
-          class="bg-white rounded-2xl shadow-sm py-24 flex flex-col items-center justify-center text-center"
-        >
-          <div
-            class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mb-6"
-          >
-            <i class="fa-regular fa-file-lines text-4xl text-blue-600"></i>
-          </div>
-
-          <h3 class="text-xl font-semibold text-blue-900 mb-2">
-            No jobs available
-          </h3>
-
-          <p class="text-gray-500 text-sm">
-            Check back soon for new job opportunities
-          </p>
-        </div>
+        <div id="jobsContainer"></div>
       </div>
     </div>
+
     <script src="Js/helper.js"></script>
     <script src="Js/script.js"></script>
   </body>
