@@ -109,27 +109,33 @@ let currentTab = "all";
 function showJobs() {
   jobContainer.innerHTML = "";
 
-  if (jobList.length === 0) {
-    jobContainer.innerHTML = `
-      <div class="text-center py-20">
+  let jobsToShow = jobList;
+
+  if (currentTab !== "all") {
+    jobsToShow = jobList.filter(function (job) {
+      return job.status === currentTab;
+    });
+  }
+
+  if (jobsToShow.length === 0) {
+    jobContainer.innerHTML` <div class="text-center py-20">
         <h3 class="text-xl font-semibold text-blue-900 mb-2">
           No jobs available
         </h3>
         <p class="text-gray-500 text-sm">
-          Please check later
+          Try another tab
         </p>
-      </div>
-    `;
+      </div>`;
 
-    jobCountText.innerText = "0 Jobs";
+    jobContainer.innerText = "0 Jobs";
+    updateDashboard();
     return;
   }
 
   jobContainer.className = "space-y-6";
 
-  jobList.forEach(function (job) {
+  jobsToShow.forEach(function (job) {
     let card = document.createElement("div");
-
     card.className =
       "bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-3";
 
@@ -165,11 +171,10 @@ function showJobs() {
 
     jobContainer.appendChild(card);
   });
+  jobCountText.innerText = jobsToShow.length + " Jobs";
 
-  jobCountText.innerText = jobList.length + " Jobs";
+  updateDashboard();
 }
-
-showJobs();
 
 //=>
 
@@ -213,3 +218,19 @@ function updateDashboard() {
 
   rejectedCountBox.innerText = rejectedTotal;
 }
+
+//>Btn-works-logic
+allBtn.addEventListener("click", function () {
+  currentTab = "all";
+  showJobs();
+});
+
+interviewBtn.addEventListener("click", function () {
+  currentTab = "interview";
+  showJobs();
+});
+
+rejectedBtn.addEventListener("click", function () {
+  currentTab = "rejected";
+  showJobs();
+});
