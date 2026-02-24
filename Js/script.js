@@ -11,7 +11,6 @@ let jobList = [
     description: "Build responsive UI using modern JavaScript frameworks.",
     status: "all",
   },
-
   {
     id: 2,
     companyName: "Cloud sync Ltd",
@@ -22,7 +21,6 @@ let jobList = [
     description: "Develop REST APIs and manage server architecture.",
     status: "all",
   },
-
   {
     id: 3,
     companyName: "Pixel craft Studio",
@@ -33,7 +31,6 @@ let jobList = [
     description: "Design user interfaces for web applications.",
     status: "all",
   },
-
   {
     id: 4,
     companyName: "Secure net Systems",
@@ -44,7 +41,6 @@ let jobList = [
     description: "Monitor and secure enterprise network systems.",
     status: "all",
   },
-
   {
     id: 5,
     companyName: "Data mind AI",
@@ -55,7 +51,6 @@ let jobList = [
     description: "Develop AI models and improve prediction systems.",
     status: "all",
   },
-
   {
     id: 6,
     companyName: "Bright app studio",
@@ -66,7 +61,6 @@ let jobList = [
     description: "Build Android and iOS applications.",
     status: "all",
   },
-
   {
     id: 7,
     companyName: "Web core Agency",
@@ -77,7 +71,6 @@ let jobList = [
     description: "Develop and maintain WordPress websites.",
     status: "all",
   },
-
   {
     id: 8,
     companyName: "Fine Corp",
@@ -118,16 +111,18 @@ function showJobs() {
   }
 
   if (jobsToShow.length === 0) {
-    jobContainer.innerHTML` <div class="text-center py-20">
+    jobContainer.innerHTML = `
+      <div class="text-center py-20">
         <h3 class="text-xl font-semibold text-blue-900 mb-2">
           No jobs available
         </h3>
         <p class="text-gray-500 text-sm">
           Try another tab
         </p>
-      </div>`;
+      </div>
+    `;
 
-    jobContainer.innerText = "0 Jobs";
+    jobCountText.innerText = "0 Jobs";
     updateDashboard();
     return;
   }
@@ -136,6 +131,7 @@ function showJobs() {
 
   jobsToShow.forEach(function (job) {
     let card = document.createElement("div");
+
     card.className =
       "bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-3";
 
@@ -166,13 +162,18 @@ function showJobs() {
           class="px-4 py-1 border border-red-500 text-red-600 rounded-md text-xs">
           Rejected
         </button>
+
+        <button data-id="${job.id}" data-type="delete"
+          class="px-4 py-1 border border-gray-400 text-gray-600 rounded-md text-xs">
+          Delete
+        </button>
       </div>
     `;
 
     jobContainer.appendChild(card);
   });
-  jobCountText.innerText = jobsToShow.length + " Jobs";
 
+  jobCountText.innerText = jobsToShow.length + " Jobs";
   updateDashboard();
 }
 
@@ -181,42 +182,32 @@ function showJobs() {
 jobContainer.addEventListener("click", function (event) {
   let btn = event.target;
 
-  if (btn.tagName !== "BUTTON") {
-    return;
-  }
+  if (btn.tagName !== "BUTTON") return;
 
   let id = btn.getAttribute("data-id");
   let type = btn.getAttribute("data-type");
 
-  let job = jobList.find(function (item) {
-    return item.id == id;
-  });
+  if (type === "delete") {
+    jobList = removeJobById(jobList, id);
+    showJobs();
+    return;
+  }
+
+  let job = findJobById(jobList, id);
 
   if (job) {
     job.status = type;
   }
 
   showJobs();
-
-  updateDashboard();
 });
 
 //=> Counter
 
 function updateDashboard() {
   totalCountBox.innerText = jobList.length;
-
-  let interviewTotal = jobList.filter(function (job) {
-    return job.status === "interview";
-  }).length;
-
-  interviewCountBox.innerText = interviewTotal;
-
-  let rejectedTotal = jobList.filter(function (job) {
-    return job.status === "rejected";
-  }).length;
-
-  rejectedCountBox.innerText = rejectedTotal;
+  interviewCountBox.innerText = countInterview(jobList);
+  rejectedCountBox.innerText = countRejected(jobList);
 }
 
 //>Btn-works-logic
@@ -234,3 +225,5 @@ rejectedBtn.addEventListener("click", function () {
   currentTab = "rejected";
   showJobs();
 });
+
+showJobs();
